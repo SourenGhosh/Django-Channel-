@@ -29,3 +29,6 @@ And start the server with
 `python manage.py runserver`
 
 You should now be able to go to localhost:8000/chat/ and chat with the bot
+
+## Need to login before accessing chat room using createsuperuser
+## localhost:8000/table contains clicked button statistics
