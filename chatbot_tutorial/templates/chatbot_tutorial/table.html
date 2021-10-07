@@ -1,0 +1,27 @@
+<html>  
+        <head>  
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>  
+            <title>Clicked Button Table</title>  
+ 
+           </style>  
+            </head>  
+            <body>  
+             <table>
+                 <tr>
+                    <th>User</th>
+                    <th>Fat clicked</th>
+                    <th>Dumb clicked</th>
+                    <th>Stupid clicked</th>
+                 </tr>
+                 {% for i in pass_cont %}
+                 <tr>
+                    
+                    <td>{{i.user__username}}</td>
+                    <td>{{i.fat_count}}</td>
+                    <td>{{i.dumb_count}}</td>
+                    <td>{{i.stupid_count}}</td>
+                 {% endfor %}
+                 </tr>
+             </table>        
+    </body>  
+            </html>  

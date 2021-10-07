@@ -1,8 +1,18 @@
 
 // Function to simply format the text in the right way. May end up being more complicated when you have MCQs, etc.
 function generate_formatted_chat_message(data){
+	console.log(data)
+	console.log(data.type)
 	if(data.type == 'text'){
 		message_text = '<span class="message-text">' + data.text + '</span>'
+		return message_text;
+	}
+	else{
+		message_text = '<div><span class="message-text">Choose a option to follow along</span></div>'+
+						'<div><span class="message-text"><button></button></span></div>' +
+						'<div><span class="message-text"><button onclick="sendButtonMessage(this.id)" id='+data.text[0]+'>' + data.text[0] + '</button></span></div>' +
+						'<div><span class="message-text"><button onclick="sendButtonMessage(this.id)" id='+data.text[1]+'>' + data.text[1] + '</button></span></div>'+
+						'<div><span class="message-text"><button onclick="sendButtonMessage(this.id)" id='+data.text[2]+'>' + data.text[2] + '</button></span></div>'
 		return message_text;
 	}
 	console.log("invalid data format");
@@ -54,5 +64,21 @@ function sendTextMessage() {
 	chatsock.send(JSON.stringify(message));
 	$("#message").val('').focus();
     return false;   
+}
+
+function sendButtonMessage(clicked_id) {
+	console.log(clicked_id)
+	if (clicked_id == 'fat' || 'stupid' || 'dumb'){
+		message = {}
+    	message.text = clicked_id
+    	message.command= 'send'
+    	message.timestamp = new Date();
+    
+    
+    	$('#messageToSend').text('');
+		chatsock.send(JSON.stringify(message));
+		$("#message").val('').focus();
+    	return false;
+	}
 }
 		

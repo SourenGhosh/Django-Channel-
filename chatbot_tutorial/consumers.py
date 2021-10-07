@@ -1,13 +1,17 @@
 import json
 from channels import Channel
 from channels.sessions import enforce_ordering
+from channels.auth import http_session_user, channel_session_user, channel_session_user_from_http
 
 from .views import respond_to_websockets
 
 
 @enforce_ordering
+@channel_session_user_from_http
+
 def ws_connect(message):
     # Initialise their session
+    user=message.user.username
     message.reply_channel.send({
         'accept': True
     })
@@ -17,13 +21,17 @@ def ws_connect(message):
 # of its own with a few attributes extra so we can route it
 # we preserve message.reply_channel (which that's based on)
 @enforce_ordering
+@channel_session_user  
 def ws_receive(message):
+    user=message.user.username
     # All WebSocket frames have either a text or binary payload; we decode the
     # text part here assuming it's JSON.
     # You could easily build up a basic framework that did this
     # encoding/decoding
     # for you as well as handling common errors.
+
     payload = json.loads(message['text'])
+    payload['user']=user
     payload['reply_channel'] = message.content['reply_channel']
     Channel("chat.receive").send(payload)
 
@@ -52,9 +60,9 @@ def chat_leave(message):
 
 
 def chat_send(message):
-
     # First send the candidate message in the right format for
     # chatbot to print it on the message channel
+    print("LLLLLL",  message['user'])
     message_to_send_content = {
         'text': message['text'],
         'type': 'text',

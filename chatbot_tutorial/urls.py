@@ -15,9 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from .views import chat
+from .views import chat, html_table
 
 urlpatterns = [
 	url(r'^chat/$', chat, name='chat'),
+    url(r'^table/$', html_table, name='table'),
     url(r'^admin/', admin.site.urls)
 ]
